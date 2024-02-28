@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: black;
+}
+
+.container {
+  width: 768px;
+  margin: 0 auto;
+}
+
+.graph {
+  width: 100%;
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.tab {
+  font-size: 15px;
+  line-height: 21px;
+  letter-spacing: -0.3px;
+  display: block;
+  padding: 6.5px 14px;
+  font-weight: 500;
+  color: #767678;
+  border-radius: 20px;
+  background-color: #f3f5f7;
+  border: none;
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+
+.tab.active {
+  background-color: #000;
+  color: #fff;
+}
+
+/* .tab-content {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  min-height: 100vh;
+  background-color: #fafafa;
+} */
