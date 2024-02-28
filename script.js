@@ -3,12 +3,12 @@ const API_KEY = "3421707b4ccdb97f492e171b71a0d13de1bfe4f8";
 let COMPANY_CODE = "00126380"; // 삼성전자 코드
 let YEAR = "2022";
 let REPORT_CODE = "11011"; // 11011: 사업보고서 (나머지는 반기 / 분기 보고서)
-// const url = new URL(
-//   `https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
-// );
 const url = new URL(
-  `https://cors-anywhere.herokuapp.com/https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
+  `https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
 );
+// const url = new URL(
+//   `https://cors-anywhere.herokuapp.com/https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
+// );
 let data = "";
 let writing = document.querySelector("p");
 let tabs = document.querySelectorAll(".tab");
@@ -70,7 +70,7 @@ function drawChart() {
   const data = google.visualization.arrayToDataTable(df);
 
   const options = {
-    title: "Revenue",
+    // title: "Revenue",
     vAxis: {
       format: "0,000억", // x 축 단위를 소수점 두 자리로 변경
       gridlines: { count: 2 }, // x 축 그리드 라인 제거
