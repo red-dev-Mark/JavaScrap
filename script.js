@@ -16,15 +16,12 @@ let tabs = document.querySelectorAll(".tab");
 tabs.forEach(function (tab) {
   tab.addEventListener("click", function () {
     toggleActive(tab);
-    let activeButton = document.querySelector('.tab.active');
+    let activeButton = document.querySelector(".tab.active");
     let textContent = activeButton.textContent.trim();
     console.log(textContent);
     createChart(textContent);
-   
   });
 });
-
-
 
 async function createChart(textContent) {
   try {
@@ -33,11 +30,13 @@ async function createChart(textContent) {
     const corpCode = result.list[0].corp_code;
 
     console.log(corpCode); // corp_code 값을 콘솔에 출력합니다.
-    writing.textContent = corpCode; // writing은 DOM 요소를 가리키는 변수로 가정합니다.
+    writing.textContent = `회사코드: ${corpCode}`; // writing은 DOM 요소를 가리키는 변수로 가정합니다.
 
     // find 메서드를 사용하여 조건에 맞는 객체를 찾습니다.
-    let selectedItem = result.list.find(
-      (item) => item.account_nm === "당기순이익"?textContent==="당기순이익":"매출액" && item.fs_nm === "재무제표"
+    let selectedItem = result.list.find((item) =>
+      item.account_nm === "당기순이익"
+        ? textContent === "당기순이익"
+        : "매출액" && item.fs_nm === "재무제표"
     );
 
     // 조건에 맞는 객체에서 'thstrm_amount' 값을 추출합니다.
@@ -49,9 +48,9 @@ async function createChart(textContent) {
 
     df = [
       ["Company", "Samsung"],
-      ["2020", parseInt(beforeFormerAmount.replace(/,/g, ""), 10)],
-      ["2021", parseInt(formerTermAAmount.replace(/,/g, ""), 10)],
-      ["2022", parseInt(thisTermAmount.replace(/,/g, ""), 10)],
+      ["2020", parseInt(beforeFormerAmount.replace(/,/g, ""), 10) / 100000000],
+      ["2021", parseInt(formerTermAAmount.replace(/,/g, ""), 10) / 100000000],
+      ["2022", parseInt(thisTermAmount.replace(/,/g, ""), 10) / 100000000],
     ];
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
@@ -72,14 +71,14 @@ function drawChart() {
 
   const options = {
     title: "Revenue",
-    hAxis: {
-      title: "Year",
-      format: '0억원' // x 축 단위를 억원으로 변경
+    vAxis: {
+      format: "0,000억", // x 축 단위를 소수점 두 자리로 변경
+      gridlines: { count: 2 }, // x 축 그리드 라인 제거
     },
-    bar: { groupWidth: '50%' }, // 바 폭 조절
-    colors: ['#808080', '#808080', '#000000'], // 바의 색상 지정
+    bar: { groupWidth: "30%" }, // 바 폭 조절
+    legend: { position: "bottom" },
+    colors: ["#000000"],
   };
-
 
   const chart = new google.visualization.ColumnChart(
     document.getElementById("myChart")
@@ -98,4 +97,3 @@ function toggleActive(element) {
 }
 
 createChart();
-
