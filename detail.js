@@ -1,9 +1,50 @@
 let corpCode = "";
 const API_KEY = "3421707b4ccdb97f492e171b71a0d13de1bfe4f8";
-let COMPANY_CODE = "00126380"; // 삼성전자 코드
+let COMPANY_CODE = "00164742";
+let corpname = "삼성전자";
+
+const companies = [
+  { corpcode: "00126380", corpname: "삼성전자" },
+  { corpcode: "00164742", corpname: "현대자동차" },
+  { corpcode: "00401731", corpname: "LG전자" },
+  { corpcode: "00266961", corpname: "NAVER" },
+];
+
+const findCorpCodeByName = (name) => {
+  const company = companies.find((company) => company.corpname === name);
+  return company ? company.corpcode : null;
+};
+
+function selectCompany() {
+  const selectElement = document.getElementById("mySelect");
+  selectElement.addEventListener("change", function () {
+    const selectedValue = this.value;
+    corpname = selectedValue;
+    COMPANY_CODE = findCorpCodeByName(selectedValue);
+    url = new URL(
+      `https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
+    );
+
+    createChart("매출액");
+    tabs.forEach(function (tab) {
+      tab.classList.remove("active");
+      tabSales.classList.add("active");
+    });
+
+    // 클릭된 요소에 active 클래스를 추가
+    element.classList.add("active");
+
+    createChart("매출액");
+
+    // 여기서 script.js로 값을 전달하거나 원하는 작업을 수행할 수 있습니다.
+  });
+}
+
+// const corpName = findCorpNameByCorpCode(filePath, COMPANY_CODE);
+// let COMPANY_CODE = "00159193"; // 삼성전자 코드
 let YEAR = "2022";
 let REPORT_CODE = "11011"; // 11011: 사업보고서 (나머지는 반기 / 분기 보고서)
-const url = new URL(
+let url = new URL(
   `https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
 );
 // const url = new URL(
@@ -12,6 +53,7 @@ const url = new URL(
 let data = "";
 let writing = document.querySelector("p");
 let tabs = document.querySelectorAll(".tab");
+let tabSales = document.getElementById("tabSales");
 
 tabs.forEach(function (tab) {
   tab.addEventListener("click", function () {
@@ -23,20 +65,18 @@ tabs.forEach(function (tab) {
   });
 });
 
-async function createChart(textContent) {
+async function createChart(accNm) {
   try {
     const result = await getCompanyInfo(); // dataSample은 Promise를 반환해야 합니다.
     console.log(result); // API로부터 받은 데이터를 콘솔에 출력합니다.
-    const corpCode = result.list[0].corp_code;
+    // const corpCode = result.list[0].corp_code;
 
-    console.log(corpCode); // corp_code 값을 콘솔에 출력합니다.
-    writing.textContent = `회사코드: ${corpCode}`; // writing은 DOM 요소를 가리키는 변수로 가정합니다.
+    // console.log(corpCode); // corp_code 값을 콘솔에 출력합니다.
+    // writing.textContent = `회사코드: ${corpCode}`; // writing은 DOM 요소를 가리키는 변수로 가정합니다.
 
     // find 메서드를 사용하여 조건에 맞는 객체를 찾습니다.
-    let selectedItem = result.list.find((item) =>
-      item.account_nm === "당기순이익"
-        ? textContent === "당기순이익"
-        : "매출액" && item.fs_nm === "재무제표"
+    let selectedItem = result.list.find(
+      (item) => item.account_nm === accNm && item.fs_nm === "재무제표"
     );
 
     // 조건에 맞는 객체에서 'thstrm_amount' 값을 추출합니다.
@@ -47,7 +87,7 @@ async function createChart(textContent) {
       : null;
 
     df = [
-      ["Company", "Samsung"],
+      ["Company", corpname],
       ["2020", parseInt(beforeFormerAmount.replace(/,/g, ""), 10) / 100000000],
       ["2021", parseInt(formerTermAAmount.replace(/,/g, ""), 10) / 100000000],
       ["2022", parseInt(thisTermAmount.replace(/,/g, ""), 10) / 100000000],
@@ -96,4 +136,5 @@ function toggleActive(element) {
   element.classList.add("active");
 }
 
-createChart();
+createChart("매출액");
+selectCompany();

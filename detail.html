@@ -16,17 +16,26 @@
   <body>
     <main class="container">
       <section class="graph">
-        <h4>실적 그래프</h4>
+        <div class="header">
+          <h4>실적 그래프</h4>
+          <select
+            id="mySelect"
+            class="form-select select"
+            aria-label="Default select example"
+          >
+            <!-- <option selected>Open this select menu</option> -->
+            <option value="삼성전자">삼성전자</option>
+            <option value="현대자동차">현대자동차</option>
+            <option value="LG전자">LG전자</option>
+            <option value="NAVER">NAVER</option>
+          </select>
+        </div>
 
         <p></p>
 
         <div class="tabs">
-          <button class="tab active">
-            매출액
-          </button>
-          <button class="tab">
-            당기순이익
-          </button>
+          <button class="tab active" id="tabSales">매출액</button>
+          <button class="tab">당기순이익</button>
         </div>
 
         <div class="tab-content">
@@ -44,6 +53,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="script.js"></script>
+    <script src="detail.js"></script>
   </body>
 </html>

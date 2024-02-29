@@ -9,6 +9,7 @@ body {
 }
 
 .graph {
+  margin-top: 20px;
   width: 100%;
   background: #fff;
   padding: 10px 15px;
@@ -35,7 +36,6 @@ body {
   width: 100%;
 }
 
-
 .tab.active {
   background-color: #000;
   color: #fff;
@@ -49,3 +49,12 @@ body {
   min-height: 100vh;
   background-color: #fafafa;
 } */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.select {
+  max-width: 30%;
+}
