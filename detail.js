@@ -10,6 +10,27 @@ const companies = [
   { corpcode: "00266961", corpname: "NAVER" },
 ];
 
+let YEAR = "2022";
+let REPORT_CODE = "11011"; // 11011: 사업보고서 (나머지는 반기 / 분기 보고서)
+let url = new URL(
+  `https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
+);
+
+let data = "";
+let writing = document.querySelector("p");
+let tabs = document.querySelectorAll(".tab");
+let tabSales = document.getElementById("tabSales");
+
+tabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    toggleActive(tab);
+    let activeButton = document.querySelector(".tab.active");
+    let textContent = activeButton.textContent.trim();
+    console.log(textContent);
+    createChart(textContent);
+  });
+});
+
 const findCorpCodeByName = (name) => {
   const company = companies.find((company) => company.corpname === name);
   return company ? company.corpcode : null;
@@ -39,31 +60,6 @@ function selectCompany() {
     // 여기서 script.js로 값을 전달하거나 원하는 작업을 수행할 수 있습니다.
   });
 }
-
-// const corpName = findCorpNameByCorpCode(filePath, COMPANY_CODE);
-// let COMPANY_CODE = "00159193"; // 삼성전자 코드
-let YEAR = "2022";
-let REPORT_CODE = "11011"; // 11011: 사업보고서 (나머지는 반기 / 분기 보고서)
-let url = new URL(
-  `https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
-);
-// const url = new URL(
-//   `https://cors-anywhere.herokuapp.com/https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
-// );
-let data = "";
-let writing = document.querySelector("p");
-let tabs = document.querySelectorAll(".tab");
-let tabSales = document.getElementById("tabSales");
-
-tabs.forEach(function (tab) {
-  tab.addEventListener("click", function () {
-    toggleActive(tab);
-    let activeButton = document.querySelector(".tab.active");
-    let textContent = activeButton.textContent.trim();
-    console.log(textContent);
-    createChart(textContent);
-  });
-});
 
 async function createChart(accNm) {
   try {
