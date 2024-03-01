@@ -1,0 +1,92 @@
+body {
+    background-color: black;
+}
+
+.container {
+    background-color: white;
+    height: 100vh;
+    padding: 0px;
+}
+
+.title {
+    padding: 8px;
+}
+
+.title-image {
+    width: 200px;
+}
+
+.company-info {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.company-code-info {
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.company-name-info {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.right-company-info {
+    width: 30%;
+}
+
+@media screen and (max-width: 769px) {
+    .left-company-info {
+        text-align: center;
+    }
+    .right-company-info {
+        width: 100%;
+    }
+}
+
+.company-scorecard-info {
+    margin: 0px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.line-no-info {
+    background-color: black;
+    height: 8px;
+}
+
+.scorecard-title-info {
+    padding: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.scorecard-year-info {
+    font-weight: 300;
+    font-size: 12px;
+    color: #878787;
+}
+
+.scorecard-item-info {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.account-name-info {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 12px;
+    color: #878787;
+    width: 35%;
+}
+
+.current-amount-info {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 16px;
+    width: 55%;
+    text-align: right;
+}
