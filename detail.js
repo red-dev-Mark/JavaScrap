@@ -1,13 +1,24 @@
 let corpCode = "";
 const API_KEY = "3421707b4ccdb97f492e171b71a0d13de1bfe4f8";
 let COMPANY_CODE = "00164742";
-let corpname = "삼성전자";
+let corpName = "삼성전자";
 
 const companies = [
-  { corpcode: "00126380", corpname: "삼성전자" },
-  { corpcode: "00164742", corpname: "현대자동차" },
-  { corpcode: "00401731", corpname: "LG전자" },
-  { corpcode: "00266961", corpname: "NAVER" },
+  { corpCode: '00126380', corpName: '삼성전자' },
+  { corpCode: '00164742', corpName: '현대자동차' },
+  { corpCode: '00164779', corpName: '에스케이하이닉스' },
+  { corpCode: '00401731', corpName: 'LG전자' },
+  { corpCode: '00258801', corpName: '카카오' },
+  { corpCode: '00298270', corpName: '안랩' },
+  { corpCode: '00113410', corpName: 'CJ대한통운' },
+  { corpCode: '00126186', corpName: '삼성에스디에스' },
+  { corpCode: '00759294', corpName: '와이솔' },
+  { corpCode: '00145880', corpName: '현대제철' },
+  { corpCode: '00106368', corpName: '금호석유화학' },
+  { corpCode: '00120030', corpName: '지에스건설' },
+  { corpCode: '00540429', corpName: '휴림로봇' },
+  { corpCode: '00145109', corpName: '유한양행' },
+  { corpCode: '00101488', corpName: '경동나비엔' }
 ];
 
 let YEAR = "2022";
@@ -20,6 +31,16 @@ let data = "";
 let writing = document.querySelector("p");
 let tabs = document.querySelectorAll(".tab");
 let tabSales = document.getElementById("tabSales");
+let comp = document.getElementById("mySelect")
+let compList =""
+
+for (i=0;i<companies.length;i++){
+  
+  compList+= `<option value="${companies[i].corpName}">${companies[i].corpName}</option>`
+  
+
+}
+comp.innerHTML = compList
 
 tabs.forEach(function (tab) {
   tab.addEventListener("click", function () {
@@ -32,15 +53,15 @@ tabs.forEach(function (tab) {
 });
 
 const findCorpCodeByName = (name) => {
-  const company = companies.find((company) => company.corpname === name);
-  return company ? company.corpcode : null;
+  const company = companies.find((company) => company.corpName === name);
+  return company ? company.corpCode : null;
 };
 
 function selectCompany() {
   const selectElement = document.getElementById("mySelect");
   selectElement.addEventListener("change", function () {
     const selectedValue = this.value;
-    corpname = selectedValue;
+    corpName = selectedValue;
     COMPANY_CODE = findCorpCodeByName(selectedValue);
     url = new URL(
       `https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
@@ -83,7 +104,7 @@ async function createChart(accNm) {
       : null;
 
     df = [
-      ["Company", corpname],
+      ["Company", corpName],
       ["2020", parseInt(beforeFormerAmount.replace(/,/g, ""), 10) / 100000000],
       ["2021", parseInt(formerTermAAmount.replace(/,/g, ""), 10) / 100000000],
       ["2022", parseInt(thisTermAmount.replace(/,/g, ""), 10) / 100000000],
