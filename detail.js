@@ -121,7 +121,8 @@ const renderCompanyScorecardInfo = () => {
         companyScorecardHTML += `
             <div class="scorecard-item-info col-md-6 col-sm-12">
                 <span class="account-name-info">${companyFinanceInfo[i].account_nm}</span>
-                <span class="current-amount-info">${(Math.round(Number(companyFinanceInfo[i].thstrm_amount) / 10000)).toLocaleString()}만원</span>
+                <span class="current-amount-info desktop">${(Math.round(Number(companyFinanceInfo[i].thstrm_amount) / 10000)).toLocaleString()}만원</span>
+                <span class="current-amount-info mobile">${(Math.round(Number(companyFinanceInfo[i].thstrm_amount) / 100000000)).toLocaleString()}억원</span>
             </div>
         `
     }

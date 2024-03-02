@@ -37,15 +37,6 @@ body {
     width: 30%;
 }
 
-@media screen and (max-width: 769px) {
-    .left-company-info {
-        text-align: center;
-    }
-    .right-company-info {
-        width: 100%;
-    }
-}
-
 .company-scorecard-info {
     margin: 0px;
     padding: 10px 15px;
@@ -89,4 +80,23 @@ body {
     font-size: 16px;
     width: 55%;
     text-align: right;
+}
+
+.mobile {
+    display: none;
+}
+
+@media screen and (max-width: 769px) {
+    .left-company-info {
+        text-align: center;
+    }
+    .right-company-info {
+        width: 100%;
+    }
+    .mobile {
+        display: inline-block;
+    }
+    .desktop {
+        display: none;
+    }
 }
