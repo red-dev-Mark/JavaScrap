@@ -1,130 +1,579 @@
-body{
-  background-color: black;
+body {
+    margin: 0;
+    background-color: #1e1e23;
+    font-family: -apple-system, BlinkMacSystemFont, HelveticaNeue, Roboto,
+      Helvetica, MalgunGothic, "맑은 고딕", sans-serif;
+  }
+
+#stocks {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    /* margin: 2em; */
 }
 
+.carousel-wrapper {
+    position: relative;
+    display: flex;
+    overflow: hiddem;
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+
+#carousel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px; 
+    width: fit-content;
+    animation: carouselAnimation 4000s infinite;
+}
+
+#carousel a {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: inherit;
+    text-decoration: none;
+    background-color: #fff;
+    width: 450px;
+    height: 160px;
+    border-radius: 10px;
+    padding: 15px;
+    margin-right: 10px;
+}
+
+@keyframes carouselAnimation {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-100%); }
+    40% { transform: translateX(-200%); }
+    60% { transform: translateX(-300%); }
+    80% { transform: translateX(-300%); }
+    100% { transform: translateX(0); }
+    101% { transform: translateX(0); }
+}
+
+
+
+.stock-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-right: 10px;
+}
+
+.stock-market {
+    font-size: 12px;
+}
+
+#carousel h1 {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.stock-title {
+    margin-bottom: 6px;
+}
+
+.fluctuation-rate {
+    color: #097df3;
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.stock-date {
+    color: gray;
+    font-size: 12px;
+}
+
+
+/* Carousel Graph */
+.stock-graph {
+    width: 48%;
+    height: auto;
+}
+
+.stock-chart {
+    display: block;
+    width: 100%;
+}
+
+/* Detail Page */
+.detail-stock {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #fff;
+    margin: 2em;
+    margin-bottom: 10px;
+    padding: 20px;
+}
+
+.detail-stock-info .stock-market {
+    font-size: 16px;
+}
+
+.detail-all {
+    width: 100%;
+    background-color: #fff;
+    margin: 2em;
+    padding: 20px;
+    margin-top: 0;
+}
+
+.detail-all strong {
+    display: block;
+    font-size: 22px;
+    text-align: center;
+    width: 100%;
+    border-bottom: gray solid 1.5px;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.detail-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+}
+
+.detail-list div dl div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 500px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-bottom: lightgray solid 1px;
+}
+
+.detail-list div dl div dt {
+    color: gray;
+    font-weight: normal;
+}
+
+.detail-list div dl {
+    font-weight: bold;
+}
+
+.detail-list div:first-child dl {
+    color: #097df3;
+}
+
+  .p-h2 {
+    font-size: 1.5em;
+    margin: 0;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: #1e1e23;
+  }
+  /* id="corpSearch" */
+  .container .logo {
+    width: 100%;
+    height: 112px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+    border-radius: 5px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  .container .logo .img-container {
+    width: 70%;
+    margin: 5px;
+    text-align: center;
+  }
+  .container .logo .img-container img {
+    height: 100%;
+  }
+  .container .favorite,
+  .popular {
+    width: 100%;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+    margin: 5px 0;
+    padding: 10px 0;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .search-container {
+    display: none;
+  }
+  #corpSearch{
+    position: absolute;
+    width: 150px;
+    font-size: 14px;
+    right: 115px;
+    top: 20px;
+  }
+  #searchBtn{
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    font-size: 15px;
+    font-weight: bold;
+    
+    width: 50px;
+    right: 60px;
+    top: 20px;
+  }
+  #search-show{
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    }
+  
+  .container .popular .p-corpList,
+  .f-corpList {
+    padding: 10px 0;
+    margin: 0 20px;
+  }
+  
+  .p-corpList .p-listHeader,
+  .f-listHeader {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    padding: 0 5px 10px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  .p-header-corpName,
+  .f-header-corpName {
+    width: 30%;
+    text-align: left;
+  }
+  .p-header-sales,
+  .p-header-salesIncrease,
+  .f-header-sales,
+  .f-header-salesIncrease {
+    width: 20%;
+    text-align: center;
+  }
+  .p-header-asset,
+  .p-header-netIncome,
+  .f-header-asset,
+  .f-header-netIncome {
+    width: 15%;
+    text-align: right;
+  }
+  
+  .container .popular .p-corpList .p-listContent,
+  .f-listContent {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .corp {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    height: 60px;
+    padding: 0 5px;
+    text-decoration: none;
+    color: #000000;
+    cursor: auto;
+  }
+  .corpName {
+    width: 30%;
+    text-align: left;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    color: #1e1e23;
+  }
+  .corpName span img {
+    width: 25px;
+    margin-right: 5px;
+    z-index: 100;
+  }
+  .corpName span img:hover {
+    cursor: pointer;
+  }
+  .sales {
+    width: 20%;
+    text-align: center;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    color: #1e1e23;
+  }
+  .salesIncrease {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .salesIncrease .plus {
+    background-color: #ed3738;
+    width: 80px;
+    height: 30px;
+    margin: 4px 0 0 6px;
+    font-weight: 700;
+    line-height: 34px;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 30px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .salesIncrease .minus {
+    background-color: #097df3;
+    width: 80px;
+    height: 30px;
+    margin: 4px 0 0 6px;
+    font-weight: 700;
+    line-height: 34px;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 30px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .asset,
+  .netIncome {
+    width: 15%;
+    text-align: right;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    color: #1e1e23;
+  }
+  
+  
 .news-body{
-background-color: white;
-
-}
-
-
-.newsTitle{
-  margin-bottom:30px;
-}
-
-
-
-.navbar-white{
-  display: flex;
-  width: 100%;
-  height: 52px;
-}
-
-.navbar-white>.container-fluid{
   background-color: white;
-}
-
-
-.navbar-white button {
-  font-size: 15px;
-  line-height: 21px;
-  letter-spacing: -.3px;
-  padding: 6.5px 14px;
-  font-weight: 500;
-  color: #767678;
-  border-radius: 20px;
-  background-color: #F3F5F7;
-  text-align: center;
-}
-
-.navbar-white button:hover{
-  border-radius: 30px;
-  background-color: #F3F5F7;
-  color: #767678;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.navbar-white button:active,
-.navbar-white button:focus {
-  background-color: #2E343A;
-  color: #F3F5F7; 
-}
-
-
-#news-board {
-  margin-top: 20px;
-}
-
-.news {
-  margin-top:20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  border-bottom:1px solid #e0c7c7;
-}
-
-.news-img-size {
-  max-width: 100%;
-  max-height: 100px;
-  height: auto;
-  border-radius: 8px;
-}
-
-
-@media only screen and (max-width: 768px) {
-  .news-img-size {
-    max-height: 250px; 
+  
   }
-}
-
-.col-lg-4 {
-  order: 2; 
-  margin-bottom: 20px; 
-}
-
-
-.news-text h5{
-  font-weight: bold;
-}
-
-@media (max-width: 768px) {
-.news-text p{
- display:none; 
-}
-}
-
-.news-date{
-  color:#767678;
-}
-
-a {
-  color: #000000;
-  text-decoration: none; 
-}
-
-a:hover {
-  color: #0000FF; 
-}
-
-.btn{
-  color:#222222;
-  border:none;
-}
-
-.btn:hover{
-  background-color: white;
-  color:#222222;
-}
-
-@media only screen and (max-width: 768px) {
-  .news-img-size {
-    max-height: 250px; 
+  
+  
+  .newsTitle{
+    margin-bottom:30px;
   }
-}
+  
+  
+  
+  .navbar-white{
+    display: flex;
+    width: 100%;
+    height: 52px;
+  }
+  
+  .navbar-white>.container-fluid{
+    background-color: white;
+  }
+  
+  
+  .navbar-white button {
+    font-size: 15px;
+    line-height: 21px;
+    letter-spacing: -.3px;
+    padding: 6.5px 14px;
+    font-weight: 500;
+    color: #767678;
+    border-radius: 20px;
+    background-color: #F3F5F7;
+    text-align: center;
+  }
+  
+  .navbar-white button:hover{
+    border-radius: 30px;
+    background-color: #F3F5F7;
+    color: #767678;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar-white button:active,
+  .navbar-white button:focus {
+    background-color: #2E343A;
+    color: #F3F5F7; 
+  }
+  
+  
+  #news-board {
+    margin-top: 20px;
+  }
+  
+  .news {
+    margin-top:20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom:1px solid #e0c7c7;
+  }
+  
+  .news-img-size {
+    max-width: 100%;
+    max-height: 100px;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  
+  @media only screen and (max-width: 768px) {
+    .news-img-size {
+      max-height: 250px; 
+    }
+  }
+  
+  .col-lg-4 {
+    order: 2; 
+    margin-bottom: 20px; 
+  }
+  
+  
+  .news-text h5{
+    font-weight: bold;
+  }
+  
+  @media (max-width: 768px) {
+  .news-text p{
+   display:none; 
+  }
+  }
+  
+  .news-date{
+    color:#767678;
+  }
+  
+  a {
+    color: #000000;
+    text-decoration: none; 
+  }
+  
+  a:hover {
+    color: #0000FF; 
+  }
+  
+  .btn{
+    color:#222222;
+    border:none;
+  }
+  
+  .btn:hover{
+    background-color: white;
+    color:#222222;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .news-img-size {
+      max-height: 250px; 
+    }
+  }
+  
+  .news-main {
+    display: flex;
+    flex-wrap: nowrap;
+  }
 
-.news-main {
-  display: flex;
-  flex-wrap: nowrap;
-}
+  @media screen and (max-width: 768px) {
+    #carousel a {
+        width: 200px;
+    }
+
+    .stock-graph,
+    .stock-chart {
+        display: none;
+    }
+
+    #carousel h1 {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .container .logo {
+      justify-content: center;
+      align-items: center;
+    }
+    .container .logo .img-container {
+      width: 60%;
+      margin-left: 20px;
+    }
+    .container .logo .img-container img {
+      height: auto;
+      width: 100%;
+    }
+    #search-show{
+      width: 25px;
+      }
+    .f-header-netIncome,
+    .p-header-netIncome,
+    .f-header-asset,
+    .p-header-asset,
+    .p-asset,
+    .f-asset,
+    .f-netIncome,
+    .p-netIncome {
+      display: none;
+    }
+    .f-header-corpName,
+    .p-header-corpName,
+    .corpName {
+      width: 50%;
+    }
+    .f-header-sales,
+    .p-header-sales,
+    .f-header-salesIncrease,
+    .p-header-salesIncrease,
+    .sales,
+    .salesIncrease {
+      width: 25%;
+    }
+    h2 {
+      font-size: 1.2em;
+      padding: 10px 15px;
+    }
+    .corpName,
+    .sales {
+      font-size: 16px;
+    }
+    .salesIncrease .plus {
+      width: 50px;
+      font-size: 12px;
+    }
+    .salesIncrease .minus {
+      width: 50px;
+      font-size: 12px;
+    }
+    #corpSearch{
+      width: 100px;
+      font-size: 11px;
+      right: 100px;
+    }
+    #searchBtn{
+      font-size: 12px;
+      width: 40px;
+      right: 55px;
+    }
+  }
 
