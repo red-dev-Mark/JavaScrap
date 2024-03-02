@@ -83,15 +83,6 @@ background-color: white;
   margin-bottom: 20px; 
 }
 
-.nesw-text{
-  flex: 1; /* .news-text를 자동으로 확장하여 남은 공간을 채우도록 함 */
-  padding: 0 20px;
-}
-
-.col-lg-4 {
-  flex-shrink: 0; /* .col-lg-4를 축소하지 않고 고정시킴 */
-  margin-bottom: 20px;
-}
 
 .news-text h5{
   font-weight: bold;
