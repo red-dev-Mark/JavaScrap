@@ -1,6 +1,5 @@
 window.onload = function () {
   showContent('realtimeNews');
-  addScrollListener();
 };
 
 const API_KEY = '';
@@ -102,13 +101,6 @@ function loadMoreArticles() {
   showContent(activeCategory);
 }
 
-function addScrollListener() {
-  window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      loadMoreArticles();
-    }
-  });
-}
 
 function getActiveCategory() {
   if (realtimeNewsContent.style.display === 'block') {
