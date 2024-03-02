@@ -1,29 +1,29 @@
 let corpCode = "";
-const API_KEY = "3421707b4ccdb97f492e171b71a0d13de1bfe4f8";
+// const API_KEY = "3421707b4ccdb97f492e171b71a0d13de1bfe4f8";
 let COMPANY_CODE = "00164742";
 let corpName = "삼성전자";
 
 const companies = [
-  { corpCode: '00126380', corpName: '삼성전자' },
-  { corpCode: '00164742', corpName: '현대자동차' },
-  { corpCode: '00164779', corpName: '에스케이하이닉스' },
-  { corpCode: '00401731', corpName: 'LG전자' },
-  { corpCode: '00258801', corpName: '카카오' },
-  { corpCode: '00298270', corpName: '안랩' },
-  { corpCode: '00113410', corpName: 'CJ대한통운' },
-  { corpCode: '00126186', corpName: '삼성에스디에스' },
-  { corpCode: '00759294', corpName: '와이솔' },
-  { corpCode: '00145880', corpName: '현대제철' },
-  { corpCode: '00106368', corpName: '금호석유화학' },
-  { corpCode: '00120030', corpName: '지에스건설' },
-  { corpCode: '00540429', corpName: '휴림로봇' },
-  { corpCode: '00145109', corpName: '유한양행' },
-  { corpCode: '00101488', corpName: '경동나비엔' }
+  { corpCode: "00126380", corpName: "삼성전자" },
+  { corpCode: "00164742", corpName: "현대자동차" },
+  { corpCode: "00164779", corpName: "에스케이하이닉스" },
+  { corpCode: "00401731", corpName: "LG전자" },
+  { corpCode: "00258801", corpName: "카카오" },
+  { corpCode: "00298270", corpName: "안랩" },
+  { corpCode: "00113410", corpName: "CJ대한통운" },
+  { corpCode: "00126186", corpName: "삼성에스디에스" },
+  { corpCode: "00759294", corpName: "와이솔" },
+  { corpCode: "00145880", corpName: "현대제철" },
+  { corpCode: "00106368", corpName: "금호석유화학" },
+  { corpCode: "00120030", corpName: "지에스건설" },
+  { corpCode: "00540429", corpName: "휴림로봇" },
+  { corpCode: "00145109", corpName: "유한양행" },
+  { corpCode: "00101488", corpName: "경동나비엔" },
 ];
 
 let YEAR = "2022";
 let REPORT_CODE = "11011"; // 11011: 사업보고서 (나머지는 반기 / 분기 보고서)
-let url = new URL(
+let url_dart = new URL(
   `https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
 );
 
@@ -31,16 +31,13 @@ let data = "";
 let writing = document.querySelector("p");
 let tabs = document.querySelectorAll(".tab");
 let tabSales = document.getElementById("tabSales");
-let comp = document.getElementById("mySelect")
-let compList =""
+let comp = document.getElementById("mySelect");
+let compList = "";
 
-for (i=0;i<companies.length;i++){
-  
-  compList+= `<option value="${companies[i].corpName}">${companies[i].corpName}</option>`
-  
-
+for (i = 0; i < companies.length; i++) {
+  compList += `<option value="${companies[i].corpName}">${companies[i].corpName}</option>`;
 }
-comp.innerHTML = compList
+comp.innerHTML = compList;
 
 tabs.forEach(function (tab) {
   tab.addEventListener("click", function () {
@@ -63,7 +60,7 @@ function selectCompany() {
     const selectedValue = this.value;
     corpName = selectedValue;
     COMPANY_CODE = findCorpCodeByName(selectedValue);
-    url = new URL(
+    url_dart = new URL(
       `https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcnt.json?corp_code=${COMPANY_CODE}&bsns_year=${YEAR}&reprt_code=${REPORT_CODE}&crtfc_key=${API_KEY}`
     );
 
@@ -117,7 +114,7 @@ async function createChart(accNm) {
 }
 
 const getCompanyInfo = async () => {
-  const response = await fetch(url);
+  const response = await fetch(url_dart);
   const data = await response.json();
 
   return data;
