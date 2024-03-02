@@ -4,11 +4,12 @@ import config from "./config/apikey.js";
 
 // 공통 사용 변수
 const API_KEY = config.apiKey;
-const CORP_CODE = "00101488"
+let CORP_CODE = "00101488"
 const YEAR = "2022"
 let REPORT_CODE = "11011"; // 11011: 사업보고서 (나머지는 반기 / 분기 보고서)
 let corpCode = "";
 let corpName = "삼성전자";
+let url_dart2 = "";
 const companies = [
   { corpCode: "00126380", corpName: "삼성전자" },
   { corpCode: "00164742", corpName: "현대자동차" },
@@ -31,7 +32,6 @@ const companies = [
 const accountNameInfo = ["자산총계", "유동자산", "부채총계", "자본총계", "수익(매출액)", "매출액", "영업수익", "매출원가", "영업비용", "영업이익", "영업이익(손실)", "당기순이익(손실)", "당기순이익"]
 let companyFinanceInfo = []
 let responseInfo = []
-let url_dart2 = new URL(`https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json?corp_code=${CORP_CODE}&bsns_year=${YEAR}&reprt_code=11011&fs_div=OFS&crtfc_key=${API_KEY}`)
 
 // class=graph 용 변수
 let COMPANY_CODE = "00164742";
@@ -48,15 +48,21 @@ let df = [];
 
 
 // Info 영역 작업
-// CORP_CODE에 맞는 기업명 매핑
-if (CORP_CODE) {
-    let index = companies.findIndex(obj => obj.corpCode === CORP_CODE);
-    corpName = companies[index].corpName;
-}
+// index.html에서 넘겨받은 쿼리스트링 파싱 및 dart_url2 설정
+document.addEventListener("DOMContentLoaded", function() {
+  // URL에서 쿼리 문자열 파싱
+  const params = new URLSearchParams(window.location.search);
+  corpCode = params.get('corpCode'); // 'corpCode' 쿼리 값 얻기
+  let url_dart2 = new URL(`https://corsproxy.io/?https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json?corp_code=${corpCode}&bsns_year=${YEAR}&reprt_code=11011&fs_div=OFS&crtfc_key=${API_KEY}`)
+  let index = companies.findIndex(obj => obj.corpCode === corpCode);
+  corpName = companies[index].corpName;
+  getAllCompanyInfo(url_dart2)
+});
 
-const getAllCompanyInfo = async () => {
+const getAllCompanyInfo = async (url_dart2) => {
     const response = await fetch(url_dart2);
     const data = await response.json();
+    console.log(url_dart2.toString())
     responseInfo = data.list;
     for (let i=0; i<accountNameInfo.length; i++) {
         let result = responseInfo.filter((value) => {
@@ -79,7 +85,7 @@ const getAllCompanyInfo = async () => {
 const renderCompanyInfo = () => {
     let companyHTML = `
         <div class="left-company-info col-md-6 col-sm-12">
-            <div class="company-code-info">종목코드 ${CORP_CODE}</div>
+            <div class="company-code-info">종목코드 ${corpCode}</div>
             <div class="company-name-info">${corpName}</div>
         </div>
         <div class="right-company-info col-md-6 col-sm-12">
@@ -147,7 +153,7 @@ const renderCompanyScorecardInfo = () => {
     document.querySelector(".company-scorecard-info").innerHTML = companyScorecardHTML;
 }
 
-getAllCompanyInfo()
+// getAllCompanyInfo()
 
 // Graph 영역 작업
 for (let i = 0; i < companies.length; i++) {
