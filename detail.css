@@ -1,25 +1,36 @@
+/* 공통 영역 */
 body {
+    font-family: Arial, sans-serif;
     background-color: black;
 }
 
 .container {
-    background-color: white;
+    width: 768px;
+    margin: 0 auto;
     height: 100vh;
     padding: 0px;
 }
 
+/* Navbar 영역 */
 .title {
     padding: 8px;
+    background-color: #fff;
+    width: 100%;
 }
 
 .title-image {
     width: 200px;
 }
 
+/* Info 영역 */
 .company-info {
     padding: 20px;
+    margin: 0px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    background-color: #fff;
+    border-radius: 10px;
 }
 
 .company-code-info {
@@ -39,14 +50,12 @@ body {
 
 .company-scorecard-info {
     margin: 0px;
-    padding: 10px 15px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
     display: flex;
     justify-content: space-between;
-}
-
-.line-no-info {
-    background-color: black;
-    height: 8px;
+    border-radius: 10px;
 }
 
 .scorecard-title-info {
@@ -99,4 +108,47 @@ body {
     .desktop {
         display: none;
     }
+}
+
+/* Chart 영역 */
+.graph {
+    margin-top: 20px;
+    width: 100%;
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 10px;
+  }
+  
+  .tab {
+    font-size: 15px;
+    line-height: 21px;
+    letter-spacing: -0.3px;
+    display: block;
+    padding: 6.5px 14px;
+    font-weight: 500;
+    color: #767678;
+    border-radius: 20px;
+    background-color: #f3f5f7;
+    border: none;
+    text-align: center;
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.tab.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.select {
+  max-width: 30%;
 }
