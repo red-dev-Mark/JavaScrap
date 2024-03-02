@@ -1,0 +1,139 @@
+body{
+  background-color: black;
+}
+
+.news-body{
+background-color: white;
+
+}
+
+
+.newsTitle{
+  margin-bottom:30px;
+}
+
+
+
+.navbar-white{
+  display: flex;
+  width: 100%;
+  height: 52px;
+}
+
+.navbar-white>.container-fluid{
+  background-color: white;
+}
+
+
+.navbar-white button {
+  font-size: 15px;
+  line-height: 21px;
+  letter-spacing: -.3px;
+  padding: 6.5px 14px;
+  font-weight: 500;
+  color: #767678;
+  border-radius: 20px;
+  background-color: #F3F5F7;
+  text-align: center;
+}
+
+.navbar-white button:hover{
+  border-radius: 30px;
+  background-color: #F3F5F7;
+  color: #767678;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-white button:active,
+.navbar-white button:focus {
+  background-color: #2E343A;
+  color: #F3F5F7; 
+}
+
+
+#news-board {
+  margin-top: 20px;
+}
+
+.news {
+  margin-top:20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom:1px solid #e0c7c7;
+}
+
+.news-img-size {
+  max-width: 100%;
+  max-height: 100px;
+  height: auto;
+  border-radius: 8px;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .news-img-size {
+    max-height: 250px; 
+  }
+}
+
+.col-lg-4 {
+  order: 2; 
+  margin-bottom: 20px; 
+}
+
+.nesw-text{
+  flex: 1; /* .news-text를 자동으로 확장하여 남은 공간을 채우도록 함 */
+  padding: 0 20px;
+}
+
+.col-lg-4 {
+  flex-shrink: 0; /* .col-lg-4를 축소하지 않고 고정시킴 */
+  margin-bottom: 20px;
+}
+
+.news-text h5{
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+.news-text p{
+ display:none; 
+}
+}
+
+.news-date{
+  color:#767678;
+}
+
+a {
+  color: #000000;
+  text-decoration: none; 
+}
+
+a:hover {
+  color: #0000FF; 
+}
+
+.btn{
+  color:#222222;
+  border:none;
+}
+
+.btn:hover{
+  background-color: white;
+  color:#222222;
+}
+
+@media only screen and (max-width: 768px) {
+  .news-img-size {
+    max-height: 250px; 
+  }
+}
+
+.news-main {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
