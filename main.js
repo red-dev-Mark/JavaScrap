@@ -152,7 +152,7 @@ const popularGetCorpInfo = async () => {
     if (dataCorpInfo && dataCorpInfo.list && dataCorpInfo.list.length > 0) {
       let corpInfo = {
         id: dataCorpName.corp_code,
-        stockCode: dataCorpName.stock_code, // 예: 이 부분도 존재하는지 확인 필요
+        stockCode: dataCorpName.stock_code, 
         corpName: dataCorpName.corp_name,
         sales: parseFloat(
           dataCorpInfo.list[23]?.thstrm_amount.replace(/,/g, "") || "0"
@@ -172,7 +172,6 @@ const popularGetCorpInfo = async () => {
       };
       corpInfos.push(corpInfo);
     } else {
-      // 적절한 오류 처리 또는 대체 데이터 처리
       console.log(`Data for corporation ${corp} is incomplete or missing.`);
     }
     render();
@@ -269,24 +268,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-
-// document.addEventListener("DOMContentLoaded", function() {
-//   // 모든 'p-favorite-button'에 대한 클릭 이벤트 리스너 추가
-//   document.querySelectorAll('.p-favorite-button').forEach(button => {
-//       button.addEventListener('click', function(event) {
-//           event.preventDefault(); // 기본 이벤트 방지
-//           let parentCorp = this.closest('.p-corp'); // 클릭된 버튼의 최상위 .p-corp 요소 찾기
-
-//           // '관심 기업' 목록에 기업이 이미 있는지 확인
-//           if (parentCorp.parentNode.classList.contains('p-listContent')) {
-//               // '관심 기업' 목록으로 이동
-//               document.querySelector('.f-listContent').appendChild(parentCorp);
-//               this.src = "asset/like.png"; // 버튼 이미지 변경
-//           } else {
-//               // '인기 기업' 목록으로 이동
-//               document.querySelector('.p-listContent').appendChild(parentCorp);
-//               this.src = "asset/no-like.png"; // 버튼 이미지 변경
-//           }
-//       });
-//   });
-// });
