@@ -16,8 +16,9 @@ body {
 .carousel-wrapper {
   position: relative;
   display: flex;
-  overflow: hiddem;
+  overflow: hidden;
   overflow-x: scroll;
+  overflow-y: hidden;
   scrollbar-width: none;
   height: 160px;
 }
