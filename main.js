@@ -6,17 +6,19 @@ let stocksTotalList = [];
 let stockPrices = [];
 let stockItems = [];
 
-const stockTotalUrl = new URL(`https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${API_KEY_STOCK}&resultType=json&pageNo=1&numOfRows=50`);
+const stockTotalUrl = new URL(
+  `https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${API_KEY_STOCK}&resultType=json&pageNo=1&numOfRows=50`
+);
 
 const getStock = async (urlStr) => {
   const url = new URL(urlStr);
   const response = await fetch(url);
   const data = await response.json();
   return data.response.body.items.item;
-}
+};
 
 // 종목명 name 받아와서 url 생성
-function setStockGraphUrl(name){
+function setStockGraphUrl(name) {
   return `https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${API_KEY_STOCK}&resultType=json&pageNo=1&numOfRows=50&beginBasDt=20240101&itmsNm=${name}`;
 }
 
@@ -26,17 +28,17 @@ const stockRender = async () => {
     const date = `${stocks.basDt}`;
     const formattedDate = `${date.substr(4, 2)}.${date.substr(6, 2)}`;
 
-    let fltRtColor = '';
+    let fltRtColor = "";
     if (stocks.fltRt > 0) {
-      fltRtColor = 'red';
+      fltRtColor = "red";
       stocks.fltRt = `+${stocks.fltRt}`;
     } else if (stocks.fltRt == 0) {
-      fltRtColor = 'gray';
+      fltRtColor = "gray";
     }
 
     const itemName = stocks.itmsNm;
     const stockGraphUrl = setStockGraphUrl(itemName);
-    
+
     stockItems = await getStock(stockGraphUrl);
     let timestampList = [];
     let priceList = [];
@@ -57,7 +59,7 @@ const stockRender = async () => {
             <span>${itemName}</span>
           </div>
           <div class="stock-price">
-            <h1>${Number(stocks.mrktTotAmt).toLocaleString('ko-KR')}</h1>
+            <h1>${Number(stocks.mrktTotAmt).toLocaleString("ko-KR")}</h1>
           </div>
           <div class="fluctuation-rate">
             <span style="color: ${fltRtColor};">${stocks.fltRt}%</span>
@@ -66,14 +68,20 @@ const stockRender = async () => {
             ${formattedDate}
           </div>
         </div>
-        <div id="stock-graph-${stocks.itmsNm.replace(/\s/g, '')}" class="stock-graph">
-          <canvas id="stock-chart-${stocks.itmsNm.replace(/\s/g, '')}" class="stock-chart"></canvas>
+        <div id="stock-graph-${stocks.itmsNm.replace(
+          /\s/g,
+          ""
+        )}" class="stock-graph">
+          <canvas id="stock-chart-${stocks.itmsNm.replace(
+            /\s/g,
+            ""
+          )}" class="stock-chart"></canvas>
         </div>
       </a>`;
   });
 
   stocksHTML = await Promise.all(stocksHTML);
-  document.getElementById('carousel').innerHTML = stocksHTML.join('');
+  document.getElementById("carousel").innerHTML = stocksHTML.join("");
 
   // 주식 그래프
   stockPrices.forEach((stock) => {
@@ -81,7 +89,7 @@ const stockRender = async () => {
       labels: stock.timestampList,
       datasets: [
         {
-          label: 'stock-price',
+          label: "stock-price",
           data: stock.priceList,
           borderWidth: 1.5,
           pointRadius: 0,
@@ -108,18 +116,20 @@ const stockRender = async () => {
         },
       },
       tooltips: {
-        mode: 'nearest',
+        mode: "nearest",
         intersect: true,
       },
       hover: {
-        mode: 'nearest',
+        mode: "nearest",
         intersect: true,
       },
     };
 
-    const ctx = document.getElementById(`stock-chart-${stock.itemName.replace(/\s/g, '')}`).getContext('2d');
+    const ctx = document
+      .getElementById(`stock-chart-${stock.itemName.replace(/\s/g, "")}`)
+      .getContext("2d");
     new Chart(ctx, {
-      type: 'line',
+      type: "line",
       data: chartData,
       options: chartOptions,
     });
@@ -284,7 +294,7 @@ const popularGetCorpInfo = async () => {
     if (dataCorpInfo && dataCorpInfo.list && dataCorpInfo.list.length > 0) {
       let corpInfo = {
         id: dataCorpName.corp_code,
-        stockCode: dataCorpName.stock_code, 
+        stockCode: dataCorpName.stock_code,
         corpName: dataCorpName.corp_name,
         sales: parseFloat(
           dataCorpInfo.list[23]?.thstrm_amount.replace(/,/g, "") || "0"
@@ -361,10 +371,10 @@ const render = () => {
               <div class="p-salesIncrease salesIncrease">
                   <div class="minus">
                      ${Math.ceil(
-                        ((info.assetThisYear - info.assetLastYear) /
-                          info.assetLastYear) *
-                          100
-                  )}%</div>
+                       ((info.assetThisYear - info.assetLastYear) /
+                         info.assetLastYear) *
+                         100
+                     )}%</div>
               </div>
               <div class="p-asset asset">
                   ${expressJoEok(info.asset)}
@@ -380,14 +390,25 @@ const render = () => {
 };
 
 function expressJoEok(amount) {
+  // 음수인지 확인
+  let isNegative = amount < 0;
+  // 절대값을 사용하여 계산
+  let absAmount = Math.abs(amount);
   // 조 단위로 변환
-  let amountInJo = Math.floor(amount / 1000000000000); // 조 단위를 구함
+  let amountInJo = Math.floor(absAmount / 1000000000000); // 조 단위를 구함
   // 억 단위로 변환 (1조를 넘는 부분만 계산)
-  let amountInEok = ((amount % 1000000000000) / 100000000).toFixed(0); // 억 단위를 구하고 정수로 변환
+  let amountInEok = Math.floor((absAmount % 1000000000000) / 100000000); // 억 단위를 구하고 정수로 변환
   // 숫자에 콤마(,) 추가
-  let amountInEokWithComma = parseInt(amountInEok).toLocaleString("ko-KR");
+  let amountInEokWithComma = amountInEok.toLocaleString("ko-KR");
 
-  return `${amountInJo}조 ${amountInEokWithComma}억원`;
+  // 음수인 경우 처리
+  let result = "";
+  if (isNegative) {
+    result = "-";
+  }
+
+  if (amountInJo === 0) return result + `${amountInEokWithComma}억원`;
+  else return result + `${amountInJo}조 ${amountInEokWithComma}억원`;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -401,55 +422,50 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-
-
 window.onload = function () {
-  showContent('realtimeNews');
+  showContent("realtimeNews");
 };
 
-document.querySelector(".realtime-news").addEventListener("click", function() {
-  showContent('realtimeNews');
+document.querySelector(".realtime-news").addEventListener("click", function () {
+  showContent("realtimeNews");
 });
-document.querySelector(".major-news").addEventListener("click", function() {
-  showContent('majorNews');
+document.querySelector(".major-news").addEventListener("click", function () {
+  showContent("majorNews");
 });
-document.querySelector(".popular-news").addEventListener("click", function() {
-  showContent('popularNews');
+document.querySelector(".popular-news").addEventListener("click", function () {
+  showContent("popularNews");
 });
 
-const realtimeNewsContent = document.getElementById('realtimeNewsContent');
-const majorNewsContent = document.getElementById('majorNewsContent');
-const popularNewsContent = document.getElementById('popularNewsContent');
+const realtimeNewsContent = document.getElementById("realtimeNewsContent");
+const majorNewsContent = document.getElementById("majorNewsContent");
+const popularNewsContent = document.getElementById("popularNewsContent");
 let totalDisplayedArticles = 5;
 
 async function showContent(category) {
   try {
-    const apiUrl = 'https://noona-api-practice.netlify.app/top-headlines';
-    const country = 'kr';
+    const apiUrl = "https://noona-api-practice.netlify.app/top-headlines";
+    const country = "kr";
     const categoryQuery = getCategoryQuery(category);
     const sortBy = getSortBy(category);
 
     const url = new URL(apiUrl);
-    url.searchParams.set('country', country);
-    url.searchParams.set('category', categoryQuery);
-    url.searchParams.set('apiKey', API_KEY);
-    url.searchParams.set('sortBy', sortBy);
+    url.searchParams.set("country", country);
+    url.searchParams.set("category", categoryQuery);
+    url.searchParams.set("apiKey", API_KEY);
+    url.searchParams.set("sortBy", sortBy);
 
     const response = await fetch(url);
     const data = await response.json();
 
-
     const shuffledArticles = shuffleArray(data.articles);
     updateContent(category, shuffledArticles);
   } catch (error) {
-    console.log('데이터를 불러오지 못 했습니다.', error);
+    console.log("데이터를 불러오지 못 했습니다.", error);
   }
-};
-
-
+}
 
 function getCategoryQuery(category) {
-  return 'business'; // 공통된 값 반환
+  return "business"; // 공통된 값 반환
 }
 
 function shuffleArray(array) {
@@ -465,51 +481,65 @@ function updateContent(category, articles) {
 
   if (articles && articles.length > 0) {
     const displayedArticles = articles.slice(0, totalDisplayedArticles);
-    const articleHTML = displayedArticles.map(article => `
+    const articleHTML = displayedArticles
+      .map(
+        (article) => `
       <div class="row news">
         <div class="news-text col-lg-8">
           <h5><a href="${article.url}" target="_blank">${article.title}</a></h5>
-          <p>${article.description || '내용 없음'}</p>
-          <div class="news-date">${moment(article.publishedAt).startOf('hour').fromNow()} | ${article.source.name || '소스 없음'}</div>
+          <p>${article.description || "내용 없음"}</p>
+          <div class="news-date">${moment(article.publishedAt)
+            .startOf("hour")
+            .fromNow()} | ${article.source.name || "소스 없음"}</div>
         </div>
         <div class="col-lg-4">
           <a href="${article.url}" target="_blank">
-            <img class="news-img-size" src="${article.urlToImage || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqEWgS0uxxEYJ0PsOb2OgwyWvC0Gjp8NUdPw&usqp=CAU'}">
+            <img class="news-img-size" src="${
+              article.urlToImage ||
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqEWgS0uxxEYJ0PsOb2OgwyWvC0Gjp8NUdPw&usqp=CAU"
+            }">
           </a>
         </div>
       </div>`
-    ).join('');
+      )
+      .join("");
 
     contentElement.innerHTML = articleHTML;
   } else {
-    contentElement.innerHTML = '기사를 찾지 못 했습니다.';
+    contentElement.innerHTML = "기사를 찾지 못 했습니다.";
   }
 
   showSelectedContent(category);
 }
 
 function showSelectedContent(category) {
-  realtimeNewsContent.style.display = category === 'realtimeNews' ? 'block' : 'none';
-  majorNewsContent.style.display = category === 'majorNews' ? 'block' : 'none';
-  popularNewsContent.style.display = category === 'popularNews' ? 'block' : 'none';
+  realtimeNewsContent.style.display =
+    category === "realtimeNews" ? "block" : "none";
+  majorNewsContent.style.display = category === "majorNews" ? "block" : "none";
+  popularNewsContent.style.display =
+    category === "popularNews" ? "block" : "none";
 }
 
 function getCategoryElement(category) {
-  if (category === 'realtimeNews') {
+  if (category === "realtimeNews") {
     return realtimeNewsContent;
-  } else if (category === 'majorNews') {
+  } else if (category === "majorNews") {
     return majorNewsContent;
-  } else if (category === 'popularNews') {
+  } else if (category === "popularNews") {
     return popularNewsContent;
   }
 }
 
 function getSortBy(category) {
-  return category === 'realtimeNews' ? 'publishedAt' : (category === 'majorNews' ? 'popularity' : 'views');
+  return category === "realtimeNews"
+    ? "publishedAt"
+    : category === "majorNews"
+    ? "popularity"
+    : "views";
 }
 
-const moreButton = document.getElementById('moreButton');
-moreButton.addEventListener('click', loadMoreArticles);
+const moreButton = document.getElementById("moreButton");
+moreButton.addEventListener("click", loadMoreArticles);
 
 function loadMoreArticles() {
   totalDisplayedArticles += 5;
@@ -517,15 +547,12 @@ function loadMoreArticles() {
   showContent(activeCategory);
 }
 
-
 function getActiveCategory() {
-  if (realtimeNewsContent.style.display === 'block') {
-    return 'realtimeNews';
-  } else if (majorNewsContent.style.display === 'block') {
-    return 'majorNews';
-  } else if (popularNewsContent.style.display === 'block') {
-    return 'popularNews';
+  if (realtimeNewsContent.style.display === "block") {
+    return "realtimeNews";
+  } else if (majorNewsContent.style.display === "block") {
+    return "majorNews";
+  } else if (popularNewsContent.style.display === "block") {
+    return "popularNews";
   }
 }
-
-
