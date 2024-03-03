@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
 const getAllCompanyInfo = async (url_dart2) => {
     const response = await fetch(url_dart2);
     const data = await response.json();
-    console.log(url_dart2.toString())
+    // console.log(url_dart2.toString())
     responseInfo = data.list;
     for (let i=0; i<accountNameInfo.length; i++) {
         let result = responseInfo.filter((value) => {
